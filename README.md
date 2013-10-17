@@ -1,6 +1,6 @@
 # OmniAuth::JWT
 
-[!(https://travis-ci.org/mbleigh/omniauth-jwt.png)[Travis CI Build Status]](https://travis-ci.org/mbleigh/omniauth-jwt)
+[![Build Status](https://travis-ci.org/mbleigh/omniauth-jwt.png)](https://travis-ci.org/mbleigh/omniauth-jwt)
 
 [JSON Web Token](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html) (JWT) is a simple
 way to send verified information between two parties online. This can be useful as a mechanism for
