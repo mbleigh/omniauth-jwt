@@ -34,6 +34,12 @@ describe OmniAuth::Strategies::JWT do
       expect(last_response.status).to eq(302)
     end
     
+    it 'should assign the uid' do
+      encoded = JWT.encode({name: 'Steve', email: 'dude@awesome.com'}, 'imasecret')
+      get '/auth/jwt/callback?jwt=' + encoded
+      expect(response_json["uid"]).to eq('dude@awesome.com')
+    end
+    
     context 'with a :valid_within option set' do
       let(:args){ ['imasecret', {auth_url: 'http://example.com/login', valid_within: 300}] }
       

@@ -39,7 +39,7 @@ in. Other available options are:
 
 * **algorithm:** the algorithm to use to decode the JWT token. This is `HS256` by default but can
   be set to anything supported by [ruby-jwt](https://github.com/progrium/ruby-jwt)
-* **uid_key:** this determines which claim will be used to uniquely identify the user. Defaults
+* **uid_claim:** this determines which claim will be used to uniquely identify the user. Defaults
   to `email`
 * **required_claims:** array of claims that are required to make this a valid authentication call.
   Defaults to `['name', 'email']`

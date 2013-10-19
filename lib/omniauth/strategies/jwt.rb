@@ -12,7 +12,7 @@ module OmniAuth
       
       option :secret, nil
       option :algorithm, 'HS256'
-      option :uid_key, 'email'
+      option :uid_claim, 'email'
       option :required_claims, %w(name email)
       option :info_map, {"name" => "name", "email" => "email"}
       option :auth_url, nil
@@ -38,7 +38,7 @@ module OmniAuth
         fail! :claim_invalid, e
       end
       
-      uid{ decoded[options.uid_field] }
+      uid{ decoded[options.uid_claim] }
       
       extra do
         {:raw_info => decoded}
