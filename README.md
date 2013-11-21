@@ -48,12 +48,23 @@ in. Other available options are:
 * **valid_within:** integer of how many seconds of time skew you will allow. Defaults to `nil`. If this
   is set, the `iat` claim becomes required and must be within the specified number of seconds of the
   current time. This helps to prevent replay attacks.
-  
+* **params_key:** the parameter we expect the JWT to be returned in from the authentication server.
+  Defaults to `jwt`
+* **user_claims_key:** where the authentication server provides the user claims nested within the token
+  rather than at the root level, this option can be used to specify the key under which to find them.
+  If a value is specified, it becomes a required claim and we expect to find the uid_claim and all
+  claims specified under required_user_claims and info_map under this key.
+  Defaults to nil
+* **required_user_claims:** array of claims that are required under the user_claims_key to make this a
+  valid authentication call.
+  Defaults to nil
+
 ### Authentication Process
 
 When you authenticate through `omniauth-jwt` you can send users to `/auth/jwt` and it will redirect
 them to the URL specified in the `auth_url` option. From there, the provider must generate a JWT
-and send it to the `/auth/jwt/callback` URL as a "jwt" parameter:
+and send it to the `/auth/jwt/callback` URL as a parameter identified by the params_key option
+("jwt" by default):
 
     /auth/jwt/callback?jwt=ENCODEDJWTGOESHERE
     
