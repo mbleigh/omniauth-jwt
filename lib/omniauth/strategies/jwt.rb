@@ -23,7 +23,7 @@ module OmniAuth
       end
       
       def decoded
-        @decoded ||= ::JWT.decode(request.params['jwt'], options.secret, options.algorithm)
+        @decoded ||= ::JWT.decode(request.params['jwt'], options.secret, options.algorithm).first
         (options.required_claims || []).each do |field|
           raise ClaimInvalid.new("Missing required '#{field}' claim.") if !@decoded.key?(field.to_s)
         end
