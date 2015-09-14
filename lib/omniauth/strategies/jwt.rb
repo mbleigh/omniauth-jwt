@@ -6,12 +6,13 @@ module OmniAuth
     class JWT
       class ClaimInvalid < StandardError; end
       class BadJwt < StandardError; end
-      
+
       include OmniAuth::Strategy
       
       args [:secret]
       
       option :secret, nil
+      option :algorithm, 'HS256'
       option :decode_options, {}
       option :uid_claim, 'email'
       option :required_claims, %w(name email)
