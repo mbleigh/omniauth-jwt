@@ -5,6 +5,7 @@ module OmniAuth
   module Strategies
     class JWT
       class ClaimInvalid < StandardError; end
+      class BadJwt < StandardError; end
       
       include OmniAuth::Strategy
       
@@ -23,7 +24,11 @@ module OmniAuth
       end
       
       def decoded
-        @decoded ||= ::JWT.decode(request.params['jwt'], options.secret, options.algorithm).first
+        begin
+          @decoded ||= ::JWT.decode(request.params['jwt'], options.secret, options.algorithm).first
+        rescue Exception => e
+          raise BadJwt.new(e.message)
+        end
         (options.required_claims || []).each do |field|
           raise ClaimInvalid.new("Missing required '#{field}' claim.") if !@decoded.key?(field.to_s)
         end
@@ -34,6 +39,8 @@ module OmniAuth
       
       def callback_phase
         super
+      rescue BadJwt => e
+        fail! 'bad_jwt', e
       rescue ClaimInvalid => e
         fail! :claim_invalid, e
       end
