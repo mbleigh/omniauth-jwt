@@ -12,6 +12,7 @@ module OmniAuth
       args [:secret]
       
       option :secret, nil
+      option :jwks_loader
       option :algorithm, 'HS256'
       option :decode_options, {}
       option :uid_claim, 'email'
@@ -26,7 +27,8 @@ module OmniAuth
       
       def decoded
         begin
-          @decoded ||= ::JWT.decode(request.params['jwt'], options.secret, true, options.decode_options).first
+          @decoded ||= ::JWT.decode(request.params['jwt'], options.secret, true,
+                                    options.decode_options.merge({ algorithm: options.algorithm, jwks: options.jwks_loader }.compact)).first
         rescue Exception => e
           raise BadJwt.new(e.message)
         end
