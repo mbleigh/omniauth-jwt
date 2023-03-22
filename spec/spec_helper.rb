@@ -1,5 +1,6 @@
 $:.unshift File.dirname(__FILE__) + "/../lib"
 require 'rack/test'
+require 'json'
 
 require 'omniauth/jwt'
 OmniAuth.config.logger = Logger.new('/dev/null')
