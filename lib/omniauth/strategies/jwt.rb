@@ -6,12 +6,15 @@ module OmniAuth
     class JWT
       class ClaimInvalid < StandardError; end
       class BadJwt < StandardError; end
-      
+
       include OmniAuth::Strategy
       
       args [:secret]
       
       option :secret, nil
+      option :decode_options, {}
+      option :jwks_loader
+      option :algorithm, 'HS256'
       option :decode_options, {}
       option :uid_claim, 'email'
       option :required_claims, %w(name email)
@@ -25,7 +28,17 @@ module OmniAuth
       
       def decoded
         begin
-          @decoded ||= ::JWT.decode(request.params['jwt'], options.secret, true, options.decode_options).first
+          @decoded ||= ::JWT.decode(
+            request.params['jwt'],
+            options.secret,
+            true,
+            options.decode_options.merge!(
+              {
+                algorithm: options.algorithm,
+                jwks: options.jwks_loader
+              }.compact
+            )
+          )[0]
         rescue Exception => e
           raise BadJwt.new(e.message)
         end
