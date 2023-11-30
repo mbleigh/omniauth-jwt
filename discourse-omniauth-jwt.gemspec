@@ -24,7 +24,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard"
   spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "rack-test"
-  
+  spec.add_development_dependency "rack", "~> 3.0"
+  spec.add_development_dependency "rack-session", "~> 2.0"
+  spec.add_development_dependency "json"
+  spec.add_development_dependency "kettle-soup-cover", "~> 1.0", ">= 1.0.2"
+
   spec.add_dependency "jwt", "~> 2.2.1"
   spec.add_dependency "omniauth", "~> 1.1"
 end
