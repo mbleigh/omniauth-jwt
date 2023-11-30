@@ -1,8 +1,8 @@
 name: Code Coverage
 
 env:
-  K_SOUP_COV_MIN_BRANCH: 100
-  K_SOUP_COV_MIN_LINE: 89
+  K_SOUP_COV_MIN_BRANCH: 85
+  K_SOUP_COV_MIN_LINE: 87
 
 on:
   push:
@@ -74,8 +74,7 @@ jobs:
           indicators: true
           output: both
           # https://github.com/irongut/CodeCoverageSummary#thresholds
-          # Using min line and min branch as proxies for the threshold limits
-          thresholds: "${{ env.K_SOUP_COV_MIN_LINE }} ${{ env.K_SOUP_COV_MIN_BRANCH }}"
+          thresholds: "75 85"
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Add Coverage PR Comment

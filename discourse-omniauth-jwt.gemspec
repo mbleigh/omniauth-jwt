@@ -28,6 +28,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rack-session", "~> 2.0"
   spec.add_development_dependency "json"
   spec.add_development_dependency "kettle-soup-cover", "~> 1.0", ">= 1.0.2"
+  spec.add_development_dependency "openssl", "~> 3.0"
+  spec.add_development_dependency "openssl-signature_algorithm", "~> 1.3"
+  spec.add_development_dependency "ed25519", "~> 1.3"
 
   spec.add_dependency "jwt", "~> 2.2.1"
   spec.add_dependency "omniauth", "~> 1.1"
