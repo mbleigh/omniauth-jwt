@@ -2,12 +2,20 @@
 require 'securerandom'
 
 # 3rd party gems
-require 'rack/session'
+begin
+  require 'rack/session'
+rescue LoadError
+  nil # File won't exist in old rack for Ruby 2.2 & 2.3
+end
 require 'rack/test'
 require 'json'
 require 'omniauth'
 require 'openssl'
-require 'openssl/signature_algorithm'
+begin
+  require 'openssl/signature_algorithm'
+rescue LoadError
+  nil # Gem doesn't exist for ancient Rubies 2.2 & 2.3
+end
 require 'ed25519'
 
 require 'byebug' if ENV['DEBUG'] == 'true'
