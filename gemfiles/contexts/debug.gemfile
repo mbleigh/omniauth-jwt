@@ -1,0 +1,3 @@
+if ENV['CI'].nil? && ENV.fetch('DEBUG', 'false').casecmp?('true')
+  gem "byebug"
+end

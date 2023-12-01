@@ -1,0 +1,2 @@
+# Coverage
+gem "kettle-soup-cover", "~> 1.0", ">= 1.0.2" # ruby 2.7

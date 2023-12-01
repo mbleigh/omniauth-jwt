@@ -32,7 +32,12 @@ module NextInstanceOf
 
     target.to receive_new.and_wrap_original do |*original_args, **original_kwargs|
       method, *original_args = original_args
-      method.call(*original_args, **original_kwargs).tap(&blk)
+      begin
+        method.call(*original_args, **original_kwargs).tap(&blk)
+      rescue ArgumentError
+        # Kludge for old ruby < 2.7
+        method.call(*original_args).tap(&blk)
+      end
     end
   end
 end

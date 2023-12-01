@@ -10,12 +10,16 @@ describe OmniAuth::Strategies::JWT do
     Rack::Builder.new do |b|
       b.use Rack::Session::Cookie, secret: SecureRandom.hex(32)
       b.use OmniAuth::Strategies::JWT, *the_args
-      b.run lambda{|env| [200, {}, [(env['omniauth.auth'] || {}).to_json]]}
+      b.run lambda{|env|
+        [200, {}, [(env['omniauth.auth'] || {}).to_json]]
+      }
     end
   }
 
   context 'request phase' do
     it 'should redirect to the configured login url' do
+      # TODO: Figure out how to write this test without using the deprecated
+      #       and unsafe, "get" method for the request phase.
       get '/auth/jwt'
       expect(last_response.status).to eq(302)
       expect(last_response.headers['Location']).to eq('http://example.com/login')

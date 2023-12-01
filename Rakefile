@@ -6,7 +6,11 @@ RSpec::Core::RakeTask.new(:spec)
 desc "alias test task to spec"
 task test: :spec
 
-require "kettle-soup-cover"
-Kettle::Soup::Cover.install_tasks
+begin
+  require "kettle-soup-cover"
+  Kettle::Soup::Cover.install_tasks
+rescue LoadError
+  # NOOP
+end
 
 task default: :spec

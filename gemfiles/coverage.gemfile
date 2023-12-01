@@ -8,4 +8,13 @@ source "https://rubygems.org"
 # On CI we only need the gemspecs' dependencies (including development dependencies).
 # Exceptions, if any, will be found in gemfiles/*
 
+# Coverage
+eval_gemfile "contexts/coverage.gemfile"
+
+# Testing
+eval_gemfile "contexts/testing.gemfile"
+
+# Debugging
+eval_gemfile "contexts/debug.gemfile"
+
 gemspec path: "../"
