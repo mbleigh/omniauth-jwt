@@ -10,13 +10,13 @@ end
 require 'rack/test'
 require 'json'
 require 'omniauth'
-require 'openssl'
 begin
+  require 'openssl'
   require 'openssl/signature_algorithm'
+  require 'ed25519'
 rescue LoadError
   nil # Gem doesn't exist for ancient Rubies 2.2 & 2.3
 end
-require 'ed25519'
 
 require 'byebug' if ENV['DEBUG'] == 'true'
 # This does not require "simplecov",
