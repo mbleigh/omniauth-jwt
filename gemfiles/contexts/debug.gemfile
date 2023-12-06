@@ -1,3 +1,6 @@
-if ENV['CI'].nil? && ENV.fetch('DEBUG', 'false').casecmp?('true')
+# Ancient rubies do not have String#casecmp?
+debugging = ENV['CI'].nil? && ENV.fetch('DEBUG', 'false')
+
+if debugging && debugging[/true/i]
   gem "byebug"
 end

@@ -53,7 +53,7 @@ module OmniAuth
               {
                 algorithms: default_algos,
                 jwks: options.jwks_loader
-              }.compact
+              }.delete_if {|_, v| v.nil? }
             )
           )[0]
         rescue Exception => e

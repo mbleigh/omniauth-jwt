@@ -9,10 +9,8 @@ source "https://rubygems.org"
 # Exceptions, if any, will be found in gemfiles/*
 
 # Testing
-gem "rspec", "~> 3.12"                        # ruby *
-gem "rack-test", "~> 2.1"                     # ruby 2.0
-gem "rack", "< 3"                             # ruby < 2.4
-gem "json", "< 2.6"                           # ruby < 2.3
+gem "rack", "~> 2.1.4.3"                      # ruby 2.2.2
+gem "json", "~> 2.5.1"                        # ruby 2.0
 
 # Debugging
 eval_gemfile "contexts/debug.gemfile"

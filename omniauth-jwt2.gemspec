@@ -20,6 +20,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  # TODO: Since this gem supports Ruby >= 2.2 we need to ensure no gems are
+  #       added here that require a newer version. Once this gem progresses to
+  #       only support non-EOL Rubies, all dependencies can be listed in this
+  #       gemspec, and the gemfiles/* pattern can be dispensed with.
   spec.add_dependency "jwt", "~> 2.2", ">= 2.2.1"                           # ruby 2.1
   spec.add_dependency "omniauth", ">= 1.1"                                  # ruby 2.2
 
@@ -30,4 +34,9 @@ Gem::Specification.new do |spec|
   # Hot reload
   spec.add_development_dependency "guard"                                   # ruby 1.9.3
   spec.add_development_dependency "guard-rspec"                             # ruby *
+
+  # Testing
+  spec.add_development_dependency "rspec", "~> 3.12"                        # ruby *
+  spec.add_development_dependency "rack-test", "~> 2.1"                     # ruby 2.0
+  spec.add_development_dependency "rspec-pending_for", "~> 0.1"             # ruby *
 end

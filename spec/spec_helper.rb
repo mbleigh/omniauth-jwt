@@ -2,6 +2,7 @@
 require 'securerandom'
 
 # 3rd party gems
+require 'rspec/pending_for'
 begin
   require 'rack/session'
 rescue LoadError

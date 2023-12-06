@@ -35,8 +35,8 @@ jobs:
         gemfile:
           - ancient
         ruby:
-          - "2.3"
-          - "2.2"
+          - "2.3.8"
+          - "2.2.10"
     runs-on: ubuntu-20.04
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
