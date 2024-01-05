@@ -1,5 +1,7 @@
 module Omniauth
   module JWT
-    VERSION = "0.0.2"
+    module Version
+      VERSION = "0.1.0"
+    end
   end
 end

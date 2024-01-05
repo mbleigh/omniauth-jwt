@@ -1,0 +1,26 @@
+# frozen_string_literal: true
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+source "https://rubygems.org"
+
+# Gemfile is only for local development.
+# On CI we only need the gemspecs' dependencies (including development dependencies).
+# Exceptions, if any, will be found in gemfiles/*
+
+# Testing
+gem "rspec", "~> 3.12"                        # ruby *
+gem "rack-test", "~> 2.1"                     # ruby 2.0
+gem "rack"                                    # ruby 2.4
+gem "rack-session", "< 2", github: "pboling/rack-session", branch: "fix-missing-rack-session"                     # ruby < 2.4
+gem "json"                                    # ruby 2.3
+gem "openssl"                                 # ruby 2.3
+gem "openssl-signature_algorithm"             # ruby 2.4
+gem "ed25519"                                 # ruby 2.4
+
+# Debugging
+eval_gemfile "contexts/debug.gemfile"
+
+gemspec path: "../"
+
+gem "omniauth", "< 2"

@@ -1,0 +1,91 @@
+name: Code Coverage
+
+env:
+  K_SOUP_COV_MIN_BRANCH: 85
+  K_SOUP_COV_MIN_LINE: 87
+
+on:
+  push:
+    branches:
+      - 'main'
+    tags:
+      - '!*' # Do not execute on tags
+  pull_request:
+    branches:
+      - '*'
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Specs with Coverage - Ruby ${{ matrix.ruby }}
+    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
+      CI_CODECOV: true
+      COVER_ALL: true
+    strategy:
+      fail-fast: false
+      matrix:
+        experimental: [false]
+        rubygems:
+          - latest
+        bundler:
+          - latest
+        gemfile:
+          - coverage
+        ruby:
+          - "3.2"
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby & Bundle
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          rubygems: ${{ matrix.rubygems }}
+          bundler: ${{ matrix.bundler }}
+          bundler-cache: true
+
+      - name: Run RSpec tests
+        run: |
+          bundle exec rspec
+
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          filename: ./coverage/coverage.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          # https://github.com/irongut/CodeCoverageSummary#thresholds
+          thresholds: "75 85"
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          recreate: true
+          path: code-coverage-results.md
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: ${{ matrix.experimental != 'false' }}

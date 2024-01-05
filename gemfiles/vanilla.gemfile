@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+source "https://rubygems.org"
+
+# Gemfile is only for local development.
+# On CI we only need the gemspecs' dependencies (including development dependencies).
+# Exceptions, if any, will be found in gemfiles/*
+
+# Coverage
+eval_gemfile "contexts/coverage.gemfile"
+
+# Testing
+eval_gemfile "contexts/testing.gemfile"
+
+# Debugging
+eval_gemfile "contexts/debug.gemfile"
+
+gemspec path: "../"
